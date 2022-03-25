@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/projects', [ProjectController::class,'index'])->name('projects');
+
+    Route::get('/project/{id}', [ProjectController::class,'show'])->name('project.show');
+
+    Route::get('/add-project', function () {
+        return view('add-project');
+    })->name('add-project');
 });
 
