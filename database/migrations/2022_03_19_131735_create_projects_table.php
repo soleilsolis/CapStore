@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->longtext('description');
-            $table->json('users');
-            $table->json('programming_languages');
-            $table->string('document_path')->nullable();
+            $table->json('users'); //contributors
+            $table->json('programming_languages'); //written in
+            $table->string('document_path')->nullable(); // upload file
             $table->softDeletes();
             $table->timestamps();
         });
