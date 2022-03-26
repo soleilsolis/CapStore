@@ -25,10 +25,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     Route::get('/projects', [ProjectController::class,'index'])->name('projects');
 
-    Route::get('/project/{id}', [ProjectController::class,'show'])->name('project.show');
+    Route::get('/project/{id}', [ProjectController::class,'show'])
+            ->whereNumber('id')
+            ->name('project.show');
 
-    Route::get('/add-project', function () {
-        return view('add-project');
-    })->name('add-project');
+    Route::get('/project/new', function () {
+        return view('project.new');
+    })->name('project.new');
 });
 

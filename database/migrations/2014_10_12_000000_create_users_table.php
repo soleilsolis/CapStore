@@ -22,7 +22,7 @@ return new class extends Migration
             $table->longtext('description')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->enum('type',['student','admin','super'])->nullable();
+            $table->enum('type',['student','admin','super'])->default('student');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });

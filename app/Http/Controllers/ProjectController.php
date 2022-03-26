@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Http\Request;
 use Validator;
 
 class ProjectController extends Controller
@@ -14,9 +15,11 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project)
     {
-        return view('projects');
+        return view('projects',[
+            'projects' => Project::all()
+        ]);
     }
 
     /**
@@ -46,9 +49,11 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
-        //
+        return view('project.show',[
+            'project' =>  $project->find($request->id)
+        ]);
     }
 
     /**
