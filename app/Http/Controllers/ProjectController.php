@@ -83,14 +83,17 @@ class ProjectController extends Controller
             'document_path' => $directory.$name
         ]);
 
-        foreach($request->contributors as $contributor_id)
+        if($request->contributors)
         {
-            $contributor = Contributor::create([
-                'user_id' => $contributor_id,
-                'project_id' => $project->id
-            ]);
+            foreach($request->contributors as $contributor_id)
+            {
+                $contributor = Contributor::create([
+                    'user_id' => $contributor_id,
+                    'project_id' => $project->id
+                ]);
+            }
         }
-
+        
         $request->file->move($directory, $name); 
 
         return $errorMessages->redirect("/project/{$project->id}");
