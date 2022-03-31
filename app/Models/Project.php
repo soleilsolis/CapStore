@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'users',
@@ -26,5 +28,10 @@ class Project extends Model
     public function contributor()
     {
         return $this->hasMany(Contributor::class);
+    }
+
+    public function like()
+    {
+        return $this->hasMany(Like::class);
     }
 }

@@ -7,7 +7,7 @@
 
 
 	<x-container>
-		<form class="pt-6 pb-5" action="/project/new" method="GET">
+		<form class="pt-6 pb-5" action="/project/create" method="GET">
 			<x-jet-button>+ New</x-jet-button>
 		</form>
 
@@ -58,4 +58,3 @@
 		}
 	</script>
 </x-app-layout>
-
