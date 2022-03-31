@@ -8,15 +8,22 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         @livewireStyles
 
         <!-- Scripts -->
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+  
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
+
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
+        
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -42,5 +49,9 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script src="/js/submit-form-v2.js" ></script>
+        <script src="/js/remove-error-input-onchange.js" ></script>
+        
     </body>
 </html>

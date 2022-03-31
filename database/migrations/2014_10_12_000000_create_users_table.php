@@ -24,7 +24,11 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->enum('type',['student','admin','super'])->default('student');
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->text('first_name');
+            $table->text('middle_name');
+            $table->text('last_name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

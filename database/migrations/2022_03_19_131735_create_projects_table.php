@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->longtext('description');
-            //$table->json('programming_languages'); //written in
+            $table->json('programming_languages'); //written in
             $table->string('document_path')->nullable(); // upload file
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
