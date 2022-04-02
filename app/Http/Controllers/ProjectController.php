@@ -34,14 +34,15 @@ class ProjectController extends Controller
 
         $skip = 0;
 
-        if($skip > 1)
+        if($request->page > 1)
         {
             $request->page--;
+            $skip = 10;
             $skip * $request->page;
         }
         
         return view('projects',[
-            'projects' => Project::skip($skip)->take(10),
+            'projects' => Project::skip($skip)->take(10)->get(),
             'count' => Project::count()
         ]);
     }

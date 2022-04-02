@@ -46,7 +46,17 @@
 					</x-tr-tbody>
 				@endforeach
 			</tbody>
+
+			<tfoot>
+				<tr>
+					<td class="text-sm font-medium text-gray-900 px-6 py-3 text-left rounded-b-lg"></td>
+				</tr>
+			</tfoot>
 		</x-table>
+		
+		<div class="ui right floated pagination menu">
+			{{ $count }}
+		</div>
 	</x-container>
 	<script>
 		const link = document.querySelectorAll(".link");
