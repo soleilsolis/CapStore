@@ -31,9 +31,18 @@ class ProjectController extends Controller
         {
             return redirect('/projects?page=1');
         }
+
+        $skip = 0;
+
+        if($skip > 1)
+        {
+            $request->page--;
+            $skip * $request->page;
+        }
         
         return view('projects',[
-            'projects' => Project::all()
+            'projects' => Project::skip($skip)->take(10),
+            'count' => Project::count()
         ]);
     }
 
