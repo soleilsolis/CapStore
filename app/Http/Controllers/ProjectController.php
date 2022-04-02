@@ -31,9 +31,19 @@ class ProjectController extends Controller
         {
             return redirect('/projects?page=1');
         }
+
+        $skip = 0;
+
+        if($request->page > 1)
+        {
+            $request->page--;
+            $skip = 10;
+            $skip * $request->page;
+        }
         
         return view('projects',[
-            'projects' => Project::all()
+            'projects' => Project::skip($skip)->take(10)->get(),
+            'count' => Project::count()
         ]);
     }
 
@@ -147,7 +157,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ErrorMessages $errorMessages)
+    public function update(Request $request, ErrorMessages $errorMessages, Faker $faker)
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:255',

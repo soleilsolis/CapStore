@@ -29,9 +29,7 @@ document.querySelectorAll(".submit-form").forEach(
 		})
 		.then(response => response.json())
 		.then(result => {
-			let message = null;
-
-			console.log(result.data)
+	
 			if(result.data != undefined){	
 				for (const [key, value] of Object.entries(result.data)) {
 					$(`.${key}`).html(value);
@@ -42,20 +40,30 @@ document.querySelectorAll(".submit-form").forEach(
 					}
 				}
 			}
-				
 
-			
-			if(message != null)
-			{
+			if(typeof result.errors !== 'undefined'){
+				let message = '';
+				for (const [key, value] of Object.entries(result.errors)) {
+					message = value;
+				};		
+
+				result.message = message;
+			}
+
+			if(typeof result.message !== 'undefined' && result.message !== null){
+				
 				$('body')
 				  .toast({
-				    title: '',
-				    message: 'See, how long i will last',
-				    //showProgress: 'bottom'
+				    displayTime: 5000,
+				    message: result.message,
+					class: typeof result.color != undefined ? result.color : ''
 				  })
 				;
-			}
-			
+
+				if(this.tagName == 'BUTTON'){
+					this.classList.remove('loading','disabled');
+				}
+			}		
 			
 
 			if(typeof result.redirect != undefined)

@@ -1,5 +1,6 @@
 @php
     use Illuminate\Support\Facades\Auth;
+    use App\Models\User;
 @endphp
 <x-app-layout>
     <x-slot name="header">
@@ -13,7 +14,7 @@
         <h1 class="font-bold pt-5 text-3xl">
             <form action="/project/edit/{{ $project->id }}" method="GET">
                 {{ $project->name }} 
-                @if($project->user_id == Auth::id())
+                @if($project->user_id == Auth::id() || User::find(Auth::id()) != 'student')
                     <x-jet-button>Edit</x-jet-button>
                 @endif
             </form>
@@ -41,7 +42,7 @@
         </h3>
 
         <div class="ui labeled button" tabindex="0">
-            <div class="ui tiny red button submit-form likebutton-" data-id="{{ $project->id }}" data-send="/project/like/">
+            <div class="ui tiny red button submit-form likebutton-" data-id="{{ $project->id }}" data-send="/project/like?id={{ $project->id }}">
               <i class="heart icon"></i> Like
             </div>
             <a class="ui basic red left pointing label like">
