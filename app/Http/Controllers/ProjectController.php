@@ -147,7 +147,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ErrorMessages $errorMessages)
+    public function update(Request $request, ErrorMessages $errorMessages, Faker $faker)
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:255',
