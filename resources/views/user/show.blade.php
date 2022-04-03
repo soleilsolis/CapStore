@@ -1,5 +1,8 @@
 
-
+@php
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+@endphp
 
 <x-app-layout>
     <x-slot name="header">
@@ -22,6 +25,12 @@
                  <p class="text-base text-gray-800 leading-tight">
                      {{ $user->description }} 
                  </p>
+
+                 <form action="/user/edit/{{ $user->id }}" method="GET">
+                    @if($user->id == Auth::id() || User::find(Auth::id()) != 'student')
+                        <x-jet-button>Edit</x-jet-button>
+                    @endif
+                </form>
             </div>
             <div class="eleven wide column">
                  <h2 class="font-semibold text-3xl text-gray-800 leading-tight">

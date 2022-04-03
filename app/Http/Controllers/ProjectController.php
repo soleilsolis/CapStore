@@ -24,7 +24,11 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+    public function search(Request $request)
+    {
+        return redirect("/projects?page=1&search={$request->search}");
+    }
+
     public function index(Project $project, Request $request)
     {
         if(!$request->page)
@@ -34,16 +38,26 @@ class ProjectController extends Controller
 
         $skip = 0;
 
+        $projects = new Project;
+
         if($request->page > 1)
         {
             $request->page--;
             $skip = 10;
             $skip * $request->page;
         }
+
+
+        /*if(!isset($projects[0]))
+        {
+            abort(404);
+        }*/
         
         return view('projects',[
-            'projects' => Project::skip($skip)->take(10)->get(),
-            'count' => Project::count()
+            'projects' => $projects->where('name', 'like', "%{$request->search}%")->orWhere('description', 'like', "%{$request->search}%")->skip($skip)->take(10)->get(),
+            'count' => Project::count()/10,
+            'page' => $request->page,
+            'search' => $request->search
         ]);
     }
 

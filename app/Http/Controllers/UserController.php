@@ -18,7 +18,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function search(Request $request)
+    {
+        return redirect("/users?page=1&search={$request->search}");
+    }
     
     public function index(Request $request)
     {
@@ -27,8 +30,21 @@ class UserController extends Controller
             return redirect('/users?page=1');
         }
 
+        $skip = 0;
+
+        $users = new User;
+
+        if($request->page > 1)
+        {
+            $request->page--;
+            $skip = 10;
+            $skip * $request->page;
+        }
+
+        $users->skip($skip)->take(10);
+
         return view('users',[
-            'users' => User::all()
+            'users' => $users->get()
         ]);
     }
 
@@ -99,7 +115,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Request $request)
     {
         $user = User::findOrFail($request->id);
 

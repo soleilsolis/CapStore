@@ -7,9 +7,25 @@
 
 
 	<x-container>
-		<form class="pt-6 pb-5" action="/project/create" method="GET">
-			<x-jet-button>+ New</x-jet-button>
-		</form>
+	
+		<div class="ui secondary menu">
+			<div class="fitted item">
+				<form  action="/project/create" method="GET">
+					<x-jet-button>+ New</x-jet-button>
+				</form>
+			</div>
+			<div class="right menu">
+				<div class="item">
+					<form action="/project/search" method="POST">
+						@csrf
+						<div class="ui action input">
+							<input name="search" id="search" type="text" placeholder="Search...">
+							<button class="ui button">Search</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
 		<x-table>
 			<thead class="border-b">
@@ -55,7 +71,9 @@
 		</x-table>
 		
 		<div class="ui right floated pagination menu">
-			{{ $count }}
+			@for($i = 1; $i < $count+1; $i++)
+				<a class="item " href="/projects?page={{ $i }}&search={{ $search }}" >{{ $i }}</a>
+			@endfor
 		</div>
 	</x-container>
 	<script>
