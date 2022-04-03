@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Validation\Rules\Password;
-
+use App\Http\Controllers\ErrorMessages;
 
 class UserController extends Controller
 {
@@ -131,7 +131,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, ErrorMessages $errorMessages)
     {
         $fields = [
             'name' => 'required|string|max:255',

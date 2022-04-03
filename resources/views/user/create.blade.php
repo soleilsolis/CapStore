@@ -54,13 +54,14 @@
                     <x-jet-input-error for="password" class="mt-2" />
                 </div>
 
-                <div class="col-span-6 sm:col-span-4">
+                <div class="ui form col-span-6 sm:col-span-4">
                     <div class="field">
                         <label for="" style="font-weight: normal">Type</label>
                         <div class="ui dropdown selection" tabindex="0">
                             <select name="type" id="type"  class="noselection">
-                               
-                                
+                               <option value="student">Student</option>
+                               <option value="admin">Admin</option>
+
                             </select>
                             <i class="dropdown icon"></i>
                             <div class="text"></div>
