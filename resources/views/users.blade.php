@@ -7,9 +7,24 @@
 
 
 	<x-container>
-		<form class="pt-6 pb-5" action="/user/create" method="GET">
-			<x-jet-button>+ New</x-jet-button>
-		</form>
+		<div class="ui secondary menu">
+			<div class="fitted item">
+				<form  action="/user/create" method="GET">
+					<x-jet-button>+ New</x-jet-button>
+				</form>
+			</div>
+			<div class="right menu">
+				<div class="item">
+					<form action="/user/search" method="POST">
+						@csrf
+						<div class="ui action input">
+							<input name="search" id="search" type="text" placeholder="Search...">
+							<button class="ui button">Search</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
 		<x-table>
 			<thead class="border-b">

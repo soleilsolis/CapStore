@@ -5,6 +5,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
 
+use App\Models\Project;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +24,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard', [
+
+        ]);
     })->name('dashboard');
 
     Route::get('/projects', [ProjectController::class,'index'])->name('projects');
@@ -36,7 +40,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     Route::post('/project/like', [LikeController::class,'store']);
 
-	Route::post('/project/store', [ProjectController::class,'store']);
+    Route::post('/project/search', [ProjectController::class,'search']);
+
+    Route::post('/project/store', [ProjectController::class,'store']);
 
     Route::get('/project/edit/{id}', [ProjectController::class,'edit'])
             ->name('project.edit');
@@ -47,7 +53,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::post('/project/delete/{id}', [ProjectController::class,'destroy'])
             ->whereNumber('id');
 
-    
+            
 
     Route::get('/user/{id}', [UserController::class,'show'])
             ->whereNumber('id')
@@ -69,6 +75,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
                 ->name('user.create');
         
         Route::post('/user/delete', [UserController::class,'destroy']);
+
+        Route::post('/user/search', [UserController::class,'search']);
+
 
         Route::post('/user/store', [UserController::class,'store']);
     });

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("New User") }}
+            {{ __("Edit User") }}
         </h2>
     </x-slot>
 
@@ -52,25 +52,6 @@
                     <x-jet-label for="password" value="{{ __('New Password') }}" />
                     <x-jet-input id="password" name="password" type="password" class="mt-1 block w-full" wire:model.defer="state.password" autocomplete="new-password" />
                     <x-jet-input-error for="password" class="mt-2" />
-                </div>
-
-                <div class="col-span-6 sm:col-span-4">
-                    <div class="field">
-                        <label for="" style="font-weight: normal">Type</label>
-                        <div class="ui dropdown selection" tabindex="0">
-                            <select name="type" id="type"  class="noselection">
-                               
-                                
-                            </select>
-                            <i class="dropdown icon"></i>
-                            <div class="text"></div>
-                            <div class="menu" tabindex="-1">
-                                <div class="item" data-value="student">Student</div>
-                                <div class="item" data-value="admin">Admin</div>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </x-slot>
         </x-jet-form-section>
