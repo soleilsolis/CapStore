@@ -22,7 +22,9 @@
 
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>     
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>   
+
+        
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -49,6 +51,7 @@
 
         @livewireScripts
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js" integrity="sha256-ErZ09KkZnzjpqcane4SCyyHsKAXMvID9/xwbl/Aq1pc=" crossorigin="anonymous"></script>  
         <script src="/js/submit-form-v2.js" ></script>
         <script src="/js/remove-error-input-onchange.js" ></script>
         

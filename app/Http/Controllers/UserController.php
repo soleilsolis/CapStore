@@ -160,6 +160,7 @@ class UserController extends Controller
         $user->middle_name = $request->middle_name;
         $user->last_name = $request->last_name;
         $user->description = $request->description;
+        $user->type = $request->type;
 
         if($request->password)
         {

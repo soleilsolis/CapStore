@@ -5,9 +5,7 @@
 		</h2>
 	</x-slot>
 
-
 	<x-container>
-	
 		<div class="ui secondary menu">
 			<div class="fitted item">
 				<form  action="/project/create" method="GET">
@@ -15,14 +13,17 @@
 				</form>
 			</div>
 			<div class="right menu">
-				<div class="item">
-					<form action="/project/search" method="POST">
-						@csrf
-						<div class="ui action input">
-							<input name="search" id="search" type="text" placeholder="Search...">
-							<button class="ui button">Search</button>
-						</div>
-					</form>
+				@if($s_name != null || $s_description != null || $s_to != null || $s_from != null) 
+					<div class="item">											
+						<a class="ui black button" href="/projects">
+							Reset Search
+						</a>					
+					</div>
+				@endif
+				<div class="item">											
+					<button class="ui black icon button" onclick="$('.modal').modal('show')">
+						<i class="search icon"></i>
+					</button>					
 				</div>
 			</div>
 		</div>
@@ -72,10 +73,42 @@
 		
 		<div class="ui right floated pagination menu">
 			@for($i = 1; $i < $count+1; $i++)
-				<a class="item " href="/projects?page={{ $i }}&search={{ $search }}" >{{ $i }}</a>
+				<a class="item " href="/projects?page={{ $i }}&name={{ $s_name }}&description={{ $s_description }}&to={{ $s_to }}&from={{ $s_from }}" >{{ $i }}</a>
 			@endfor
 		</div>
 	</x-container>
+
+	<div class="ui small modal">
+		<div class="header">Search</div>
+		<div class="content">
+			<form id="search" name="search" class="ui form"  method="POST">
+				@csrf
+				<div class="field">
+					<label for="name">Name</label>
+					<input id="name" name="name" type="text">
+				</div>
+				<div class="field">
+					<label for="description">Description</label>
+					<textarea name="description" id="description"></textarea>
+				</div>
+
+				<div class="equal width fields">
+					<div class="field">
+						<label for="from">From:</label>
+						<input id="from" name="from" type="date">
+					</div>
+					<div class="field">
+						<label for="to">To:</label>
+						<input id="to" name="to" type="date">
+					</div>
+				</div>
+				
+			</form>
+		</div>
+		<div class="actions">
+			<button class="ui black button submit-form" data-form="search" data-send="/project/search">Search</button>
+		</div>
+	</div>
 	<script>
 		const link = document.querySelectorAll(".link");
 

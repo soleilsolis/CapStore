@@ -14,7 +14,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ErrorMessages;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 use Faker\Generator as Faker;
+
+use Carbon\Carbon;
 
 class ProjectController extends Controller
 {
@@ -24,9 +28,26 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function search(Request $request)
+    public function search(Request $request, ErrorMessages $errorMessages)
     {
-        return redirect("/projects?page=1&search={$request->search}");
+        $validator = Validator::make($request->all(),[
+            'from' => 'required_with:to',
+            'to' => 'required_with:from',
+        ]);
+        
+        if($validator->fails())
+        {
+            return $errorMessages->errors($validator->errors());
+        } 
+
+        if(Carbon::parse($request->from)->gt($request->to))
+        {
+            return $errorMessages->customAlert('The "To" date is greater than the "From" date ',0,'error');
+
+        }
+        //if($request)
+
+        return $errorMessages->redirect("/projects?page=1&name={$request->name}&description={$request->description}&to={$request->to}&from={$request->from}");
     }
 
     public function index(Project $project, Request $request)
@@ -46,7 +67,14 @@ class ProjectController extends Controller
             $skip = 10;
             $skip * $request->page;
         }
+        $s_to = $request->from;
+        $s_from = $request->to;
 
+        if(!$request->from || !$request->to)
+        {
+            $request->from = '1900-01-01';
+            $request->to = Carbon::now()->isoFormat('YYYY-MM-DD');
+        }
 
         /*if(!isset($projects[0]))
         {
@@ -54,10 +82,21 @@ class ProjectController extends Controller
         }*/
         
         return view('projects',[
-            'projects' => $projects->where('name', 'like', "%{$request->search}%")->orWhere('description', 'like', "%{$request->search}%")->skip($skip)->take(10)->get(),
-            'count' => Project::count()/10,
+            'projects' => $projects->where('name', 'like', "%{$request->name}%")
+                ->where('description', 'like', "%{$request->description}%")
+                ->where(DB::raw('date(created_at)'), '>=', "{$request->from}")
+                ->where(DB::raw('date(created_at)'), '<=', "{$request->to}")
+                ->skip($skip)->take(10)->get(),
+            'count' => Project::where('name', 'like', "%{$request->name}%")
+                ->where('description', 'like', "%{$request->description}%")
+                ->where(DB::raw('date(created_at)'), '>=', "{$request->from}")
+                ->where(DB::raw('date(created_at)'), '<=', "{$request->to}")
+                ->skip($skip)->take(10)->count()/10,
             'page' => $request->page,
-            'search' => $request->search
+            's_name' => $request->name ?? null,
+            's_description' => $request->description ?? null,
+            's_to' => $s_to,
+            's_from' => $s_from 
         ]);
     }
 
@@ -70,7 +109,6 @@ class ProjectController extends Controller
     {
         return view('project.create',[
             'user' => new User,
-            'programmingLanguages' => new ProgrammingLanguage,
         ]);
     }
 
@@ -86,9 +124,6 @@ class ProjectController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:1000',
             'file' => 'required|mimes:pdf|max:52428800',
-            'programming_languages' => 'required',
-        ],[
-            'programming_languages.required' => 'Please choose at least one programming language'
         ]);
         
         if($validator->fails())
@@ -103,7 +138,7 @@ class ProjectController extends Controller
             'user_id' => Auth::id(),
             'name'=> htmlspecialchars($request->name),
             'description'=> htmlspecialchars($request->description),
-            'programming_languages'=> json_encode($request->programming_languages),
+            'programming_languages'=> json_encode([]),
             'document_path' => $directory.$name
         ]);
 
@@ -134,7 +169,6 @@ class ProjectController extends Controller
         return view('project.show',[
             'project' =>  $project->find($request->id),
             'user' => new User,
-            'programmingLanguages' => new ProgrammingLanguage,
         ]);
     }
 
@@ -160,7 +194,6 @@ class ProjectController extends Controller
         return view('project.edit',[
             'project' => $project,
             'user' => new User,
-            'programmingLanguages' => new ProgrammingLanguage,
         ]);
     }
 
@@ -177,9 +210,6 @@ class ProjectController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:1000',
             'file' => 'mimes:pdf|max:52428800',
-            'programming_languages' => 'required',
-        ],[
-            'programming_languages.required' => 'Please choose at least one programming language'
         ]);
         
         if($validator->fails())
@@ -191,7 +221,7 @@ class ProjectController extends Controller
 
         $project->name = htmlspecialchars($request->name);
         $project->description = htmlspecialchars($request->description);
-        $project->programming_languages = json_encode($request->programming_languages);
+        $project->programming_languages = json_encode([]);
 
         
         if($request->hasFile('file'))

@@ -27,11 +27,19 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 	Route::get('/dashboard', function () {
 
+		$monthly = Project::select(DB::raw("DATE_FORMAT(created_at, '%M %Y') date"),DB::raw('count(*) as projects'))
+		->groupBy('date')
+		->limit(12)
+		->get();
+
 		return view('dashboard', [
 			'latest' => Project::limit(10)->get(),
 			'mostLiked' => Project::has('like')->withCount('like')
 			->orderBy('like_count', 'desc')
-			->paginate(10)
+			->paginate(10),
+			'projectCount' => Project::all()->count(),
+			'monthly' => $monthly
+			
 		]);
 	})->name('dashboard');
 

@@ -31,16 +31,6 @@
 
         </h1>
 
-        <h3>
-            Written In: 
-            @foreach(json_decode($project->programming_languages) as $pL)
-                @php
-                    $prog = $programmingLanguages->find($pL); 
-                @endphp
-                <x-jet-button class="bg-blue-500">{{ $prog->name }}</x-jet-button>
-            @endforeach
-        </h3>
-
         <div class="ui labeled button" tabindex="0">
             <div class="ui tiny red button submit-form likebutton-" data-id="{{ $project->id }}" data-send="/project/like?id={{ $project->id }}">
               <i class="heart icon"></i> Like

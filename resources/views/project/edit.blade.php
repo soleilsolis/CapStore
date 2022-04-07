@@ -59,34 +59,6 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-4">
-                    <div class="ui form">
-                        <div class="field">
-                            <label for="" style="font-weight: normal">Written In</label>
-                            <div class="ui dropdown selection multiple" tabindex="0">
-                                <select name="programming_languages[]" id="programming_languages" multiple="" class="noselection">
-                                    @foreach ($programmingLanguages->all() as $programmingLanguage)
-                                        <option value="{{ $programmingLanguage->id }}">
-                                            {{ $programmingLanguage->name }}
-                                        </option>
-                                    @endforeach
-                                    
-                                </select>
-                                <i class="dropdown icon"></i>
-                                <div class="text"></div>
-                                <div class="menu" tabindex="-1">
-                                    @foreach ($programmingLanguages->all() as $programmingLanguage)
-                                        <div class="item programmingLanguage" data-value="{{ $programmingLanguage->id }}" data-text="{{ $programmingLanguage->name }}">                                            
-                                            {{ $programmingLanguage->name }}
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <x-jet-input-error for="programming_languages" class="mt-2" />
-                </div>
-
-                <div class="col-span-6 sm:col-span-4">
                     <x-jet-label for="file" value="{{ __('File') }}" />
                     <x-jet-input id="file" name="file" type="file" class="mt-1 block w-full" wire:model.defer="state.file" autocomplete="file" />
                     <x-jet-label value="{{ __("Current File:") }}" />
@@ -112,13 +84,7 @@
         </div>
     </div>
 
-    <script>
-        $('.dropdown').dropdown();
-        $('.delete-project').click(function(){
-            $('#delete').modal('show');
-        });
-        
-    </script>
+   
 
     @foreach($project->contributor as $contributor)
     
@@ -135,3 +101,10 @@
     @endforeach
 </x-app-layout>
 
+<script>
+    $('.dropdown').dropdown();
+    $('.delete-project').click(function(){
+        $('#delete').modal('show');
+    });
+    
+</script>

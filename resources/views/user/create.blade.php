@@ -85,4 +85,3 @@
         $('.dropdown').dropdown();
     </script>
 </x-app-layout>
-
