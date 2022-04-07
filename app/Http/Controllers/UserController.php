@@ -41,7 +41,7 @@ class UserController extends Controller
             $skip * $request->page;
         }
 
-        $users->skip($skip)->take(10);
+        $users->where('id','!=',Auth::id())->skip($skip)->take(10);
 
         return view('users',[
             'users' => $users->get()
