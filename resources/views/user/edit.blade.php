@@ -74,9 +74,10 @@
         </div>
     </x-container>
 
-    <script>
-        $('.dropdown').dropdown();
-        $('.type .item[data-value={{ $user->type }}]').click();
-    </script>
+    
 </x-app-layout>
 
+<script>
+    $('.dropdown').dropdown();
+    $('.type .item[data-value={{ $user->type }}]').click();
+</script>
