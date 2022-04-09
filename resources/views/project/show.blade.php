@@ -46,9 +46,9 @@
             {{ $project->description }}
         </p>
 
-        @if(\App\Models\User::find(Auth::id())->type != 'student')
+        @if($project->user->id == Auth::id() && \App\Models\User::find(Auth::id())->type == 'student' || \App\Models\User::find(Auth::id())->type != 'student' )
             <h3 class="font-bold py-3 text-xl">Document Download</h3>
-        
+
             <p>
                 <a href="/{{ $project->document_path }}">Download</a>
             </p>
