@@ -46,11 +46,13 @@
             {{ $project->description }}
         </p>
 
-        <h3 class="font-bold py-3 text-xl">Document Download</h3>
-
-        <p>
-            <a href="/{{ $project->document_path }}">Download</a>
-        </p>
+        @if(\App\Models\User::find(Auth::id())->type != 'student')
+            <h3 class="font-bold py-3 text-xl">Document Download</h3>
+        
+            <p>
+                <a href="/{{ $project->document_path }}">Download</a>
+            </p>
+        @endif
     </x-container>
 </x-app-layout>
 
