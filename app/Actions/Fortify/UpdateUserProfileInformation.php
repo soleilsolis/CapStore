@@ -25,6 +25,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['max:255'],
             'last_name' => ['required', 'string', 'max:255'],
+            'description' => ['max:255'],
 
         ])->validateWithBag('updateProfileInformation');
 
@@ -42,6 +43,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'middle_name' => $input['middle_name'],
                 'last_name' => $input['last_name'],
                 'email' => $input['email'],
+                'description' => $input['description']
             ])->save();
         }
     }

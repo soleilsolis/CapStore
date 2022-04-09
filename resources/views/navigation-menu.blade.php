@@ -24,7 +24,6 @@
                 </div>
                 
                 @if(\App\Models\User::find(Auth::id())->type == 'super')
-                
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                             {{ __('Users') }}
