@@ -83,28 +83,17 @@
 
         </div>
     </div>
-
-   
-
-    @foreach($project->contributor as $contributor)
-    
-        <script>
-            $(".contributor[data-value={{ $contributor->user->id }}]").click();
-        </script>
-    @endforeach
-
-    @foreach(json_decode($project->programming_languages ?? []) as $programming_language)
-    
-    <script>
-        $(".programmingLanguage[data-value={{ $programming_language }}]").click();
-    </script>
-    @endforeach
 </x-app-layout>
+
+
 
 <script>
     $('.dropdown').dropdown();
     $('.delete-project').click(function(){
         $('#delete').modal('show');
     });
-    
+
+    @foreach($project->contributor as $contributor)
+        $('.contributor[data-value={{ $contributor->user->id }}]').click();
+    @endforeach
 </script>
