@@ -21,6 +21,7 @@
                     </div>
                     <div class="ui hidden divider"></div>
 
+                    @if($user_type != 'student')
                         <h2 class="ui header">Logs</h2>
                         <table class="ui unstackable selectable table">
                             <thead>
@@ -30,13 +31,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>User</td>
-                                    <td class="right aligned">10-11-2020 12:00:00</td>
-                                </tr>
+                                @foreach($logs as $log)
+                                    <tr>
+                                        <td>{{ $log->user->name }}</td>
+                                        <td class="right aligned">10-11-2020 12:00:00</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
-                   
+                        <a href="/logs">Show more</a>
+                    @endif
                 </div>
                 <div class="column">
                     <canvas id="bar-chart" width="800" height="450"></canvas>

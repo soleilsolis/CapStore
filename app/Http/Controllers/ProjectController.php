@@ -7,6 +7,8 @@ use App\Models\Contributor;
 use App\Models\User;
 use App\Models\ProgrammingLanguage;
 use App\Models\Like;
+use App\Models\Log;
+
 
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
@@ -155,6 +157,11 @@ class ProjectController extends Controller
         
         $request->file->move($directory, $name); 
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'message' => "User ".Auth::id()." created project ".$project->id
+        ]);
+
         return $errorMessages->redirect("/project/{$project->id}");
     }
 
@@ -246,10 +253,14 @@ class ProjectController extends Controller
             }
         }
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'message' => "User ".Auth::id()." updated project ".$project->id
+        ]);
+
         $project->save();
 
         return $errorMessages->redirect("/project/{$project->id}");
-
     }
 
     public function like(Request $request, ErrorMessages $errorMessages)
@@ -289,6 +300,12 @@ class ProjectController extends Controller
     {
         $project = Project::find($request->id);
         $project->delete();
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'message' => "User ".Auth::id()." deleted project ".$project->id
+        ]);
+        
         return $errorMessages->redirect('/projects');
     }
 }

@@ -30,6 +30,16 @@
                             {{ __('Users') }}
                         </x-jet-nav-link>
                     </div>
+
+                   
+                @endif
+
+                @if(\App\Models\User::find(Auth::id())->type != 'student')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">
+                            {{ __('Logs') }}
+                        </x-jet-nav-link>
+                    </div>
                 @endif
             </div>
 
