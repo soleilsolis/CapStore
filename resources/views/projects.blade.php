@@ -13,6 +13,15 @@
 				</form>
 			</div>
 			<div class="right menu">
+				@if(\App\Models\User::find(Auth::id())->type != 'student')
+					<div class="item">											
+						<a class="ui black button" href="/csv" target="_blank">
+							<i class="print icon"></i>
+							Download File Record
+						</a>					
+					</div>
+				@endif
+
 				@if($s_name != null || $s_description != null || $s_to != null || $s_from != null) 
 					<div class="item">											
 						<a class="ui black button" href="/projects">

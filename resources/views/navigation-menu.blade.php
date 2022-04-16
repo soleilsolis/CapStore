@@ -29,8 +29,6 @@
                             {{ __('Users') }}
                         </x-jet-nav-link>
                     </div>
-
-                   
                 @endif
 
                 @if(\App\Models\User::find(Auth::id())->type != 'student')

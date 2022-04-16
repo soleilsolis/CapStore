@@ -30,9 +30,10 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
+
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 	Route::get('/dashboard', function () {
-
 		if(! session('log'))
 		{
 			Log::create([
@@ -92,6 +93,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
 			
 	Route::middleware('admin')->group(function(){
+		Route::get('/csv', [ProjectController::class,'csv']);
+
 		Route::get('/logs', [LogController::class,'index'])->name('logs');
 
 		Route::get('/users', [UserController::class,'index'])

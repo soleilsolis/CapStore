@@ -30,6 +30,53 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function csv()
+    {
+        $projects = Project::all();
+        
+        $data = [
+            ['ID','Project Name','Username','Path','Date Created']
+        ];
+
+        foreach ($projects as $project) 
+        {
+            $data[] = [
+                "{$project->id}", 
+                "{$project->name}",
+                "{$project->user->name}",
+                url('/')."/{$project->document_path}",
+                "{$project->created_at}"
+            ];
+        }
+       
+        $filename = ' report.csv';
+        
+        // open csv file for writing
+        $f = fopen('php://memory', 'w');
+        
+        if ($f === false) {
+            die('Error opening the file ' . $filename);
+        }
+
+        // write each row at a time to a file
+        foreach ($data as $row) {
+            fputcsv($f, $row);
+        }
+
+        fseek($f, 0); 
+
+            // Set headers to download file rather than displayed 
+            header('Content-Type: text/csv'); 
+            header('Content-Disposition: attachment; filename="' . $filename . '";'); 
+
+            //output all remaining data on a file pointer 
+            fpassthru($f); 
+
+        // close the file
+        fclose($f); 
+    }   
+   
+
     public function search(Request $request, ErrorMessages $errorMessages)
     {
         $validator = Validator::make($request->all(),[
