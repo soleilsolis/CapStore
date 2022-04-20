@@ -49,17 +49,17 @@ use App\Models\User;
                     @endforeach
 
                     @foreach($user->contributor as $contributor)
-                        <a class="column" href="/project/{{ $contributor->project->id }}">
-                            <div class="ui segment">
-                                <div class="ui header">
-                                    {{ $contributor->project->name }}
-                                    <div class="sub header">Created {{ $contributor->project->created_at }}</div>
+                        @if($contributor->project)
+                            <a class="column" href="/project/{{ $contributor->project->id }}">
+                                <div class="ui segment">
+                                    <div class="ui header">
+                                        {{ $contributor->project->name }}
+                                        <div class="sub header">Created {{ $contributor->project->created_at }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        @endif
                     @endforeach
-
-
                 </div>
             </div>
        </div>
